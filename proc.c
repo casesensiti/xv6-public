@@ -47,6 +47,7 @@ allocproc(void)
   return 0;
 
 found:
+  p->syscallNum = 0; // cs202 initialize num of system calls to 0
   p->state = EMBRYO;
   p->pid = nextpid++;
 
@@ -483,3 +484,45 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+// cs202
+void
+hello(void)
+{
+    cprintf("\n\nHello from the kernel space!\n\n");
+}
+// cs202
+
+// cs202
+int
+info(int n)
+{
+    if (n == 1) {
+        struct proc *p;
+        int count = 0;
+        // traverse the proc table
+        acquire(&ptable.lock);
+        for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+            if (p->state != UNUSED) {
+                count++;
+            }
+        }
+        release(&ptable.lock);
+        return count;
+    } else if (n == 2) {
+        return proc->syscallNum;
+    } else if (n == 3) {
+        int count = 0;
+        int i;
+        for(i = 0; i < NPDENTRIES; i++){
+            if((proc->pgdir)[i] & PTE_P){
+                count++;
+            }
+        }
+        return count;
+    } else {
+        //cprintf("\n\nIn info, invalid number.\n\n");
+        return -1;
+    }
+}
+// cs202

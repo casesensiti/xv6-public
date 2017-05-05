@@ -89,3 +89,31 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// a wrapper...
+// cs202
+int
+sys_hello(void)
+{
+    hello();
+    return 0;
+}
+// cs202
+
+// cs202
+int
+sys_info(void)
+{
+    int n;
+    argint(0, &n);
+    if (n != 1 && n != 2 && n != 3)
+        return -1;
+    return info(n);
+}
+// cs202
+
+
+
+
+
+

@@ -116,6 +116,8 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
+void            hello(void); // cs202
+int             info(int); // cs202
 
 // swtch.S
 void            swtch(struct context**, struct context*);
